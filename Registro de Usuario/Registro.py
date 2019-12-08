@@ -1,5 +1,7 @@
-listaNombres = ["Santi", "Fulano", "Mengano", "Zutano"]
+import string
+import random
 
+listaNombres = ["Santi", "Fulano", "Mengano", "Zutano"]
 
 def mostrarNombres():
     print("////////////// Listado ///////////////")
@@ -9,9 +11,26 @@ def mostrarNombres():
 
 
 def generar(opciones):
-
-    
     con = ""
+    #todo preguntar como se puede partir el if que se me sale de la linea
+    if opciones['b'] == "Excluir" and opciones['c'] == "Excluir" and opciones['d'] == "Excluir" and opciones['e'] == "Excluir":
+        print("Has desactivado todas las opciones así que te quedas sin contraseña")
+    else:
+        while True:#se va metiendo caracter a caracter hasta tener el tope aunque me paso por uno
+            if opciones['b'] == "Incluir" and len(con) <= opciones['a']:
+                con += random.choice(string.ascii_lowercase)
+            if opciones['c'] == "Incluir" and len(con) <= opciones['a']:
+                con += random.choice(string.ascii_uppercase)
+            if opciones['d'] == "Incluir" and len(con) <= opciones['a']:
+                con += random.choice(string.punctuation)
+            if opciones['e'] == "Incluir" and len(con) <= opciones['a']:
+                con += random.choice(string.digits)
+            #rectifico lo que me sobra y salgo del bucle
+            if len(con) >= opciones['a']:
+                con = con[:opciones['a']]
+                break
+
+
     return con
 
 
@@ -39,7 +58,7 @@ while True:
 opciones = dict.fromkeys(['b', 'c', 'd', 'e'], "Incluir")
 opciones.setdefault('a', 8)#aquí no sabia como meterlo al principio//todo preguntar como hacerlo bien
 opcion = ""
-
+contrasinal = ""
 while opcion.lower() != 'f':
     #Muestra el menú con las opciones todas en incluir
     opcion = input("a) Definir Longitud de Contraseña\n"
@@ -67,3 +86,5 @@ while opcion.lower() != 'f':
         print("Opción Incorrecta 🤬\n")
 
 # ///////////////////////////// PARTE 3 /////////////////////////////////////////
+
+print(contrasinal)
