@@ -21,7 +21,7 @@
   <component name="ProjectId" id="1TwKIolISdEHcK4gycrNR9MKKQM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Diccionarios/metodos.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hacer sun switch" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -76,7 +76,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

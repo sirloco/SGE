@@ -21,7 +21,7 @@
   <component name="ProjectId" id="1UZxDSIImnNyk2swIwWpeibZpYp" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ValidacionU.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Registro de Usuario" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
@@ -77,7 +77,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
