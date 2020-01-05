@@ -1,6 +1,7 @@
 import string
 import random
 import re
+import smtplib #para enviar el mail
 
 listaNombres = ["Santi", "Fulano", "Mengano", "Zutano"]
 
@@ -125,3 +126,13 @@ print("Nombre: -> ", nombre, "Contraseña: ", contrasinal)
 listaNombres.append(nombre.capitalize())
 
 # ///////////////////////////// PARTE 6 /////////////////////////////////////////
+#cuidado con las eñes que no va
+mensaje = "Tu usuario es " + nombre + "Y la password es " + contrasinal
+print(mensaje)
+serverSMTP = smtplib.SMTP('smtp.gmail.com', 587)
+
+serverSMTP.starttls()
+
+serverSMTP.login("sgcalava@gmail.com", "adlocal01")
+serverSMTP.sendmail("sgcalava@gmail.com", email, mensaje)
+serverSMTP.close()
