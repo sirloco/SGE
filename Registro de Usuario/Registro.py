@@ -130,9 +130,7 @@ listaNombres.append(nombre.capitalize())
 mensaje = "Tu usuario es " + nombre + "Y la password es " + contrasinal
 print(mensaje)
 serverSMTP = smtplib.SMTP('smtp.gmail.com', 587)
-
 serverSMTP.starttls()
-
 serverSMTP.login("sgcalava@gmail.com", "adlocal01")
 serverSMTP.sendmail("sgcalava@gmail.com", email, mensaje)
 serverSMTP.close()
