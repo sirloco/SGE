@@ -3,6 +3,8 @@ import Clase
 clientes = []
 oportunidades = []
 
+
+# /////////////// MUESTRA LISTADO DE OPORTUNIDADES DEVUELVE ELEGIDA///////////////////
 def muestraOportunidad():
     repite = True
     while repite:
@@ -12,13 +14,15 @@ def muestraOportunidad():
             i += 1
 
         try:
-            return int(input("Elige una oportunidad: "))-1
+            return int(input("Elige una oportunidad: ")) - 1
         except:
             repite = True
 
 
-def creaActividad():
+#################################################################################
 
+# ////////////////// CREA ACTIVIDAD Y LA ENLAZA CON SU OPORTUNIDAD ///////////////
+def creaActividad():
     nombre = ""
     fecha = ""
     descripcion = ""
@@ -39,18 +43,58 @@ def creaActividad():
             else:
                 repite = False
 
-        #creamos actividad
-        actividad = Clase.Actividad(nombre,descripcion,fecha)
-        #añadimos la actividad a la lista de nuevas actividades de la oportunidad selecionada
-        oportunidades[opor].getNuevas().append(actividad)
-        #le indicamos a la actividad a que oportunidad pertenece
+        # creamos actividad
+        actividad = Clase.Actividad(nombre, descripcion, fecha)
+        # añadimos la actividad a la lista de nuevas actividades de la oportunidad selecionada
+        oportunidades[opor].getActividades().append(actividad)
+        # le indicamos a la actividad a que oportunidad pertenece
         actividad.setOportunidad(oportunidades[opor])
 
 
+#######################################################################################
 
-def cambiaEstado():
-    return "Cambia estado"
+# ///////////////////////////////////// CAMBIA ACTIVIDAD DE ETAPA /////////////////////
+def cambiaEtapa():
+    if len(oportunidades) < 1:
+        print("Debe existir una Oportunidad para una actividad")
+    else:
 
+        acti = -1
+        etap = -1
+        opor = muestraOportunidad()
+
+        repite = True
+        while repite:
+            i = 1
+            for actividad in oportunidades[opor].getActividades():
+                print(i, ": ", actividad.getNombre())
+                i += 1
+            try:
+                acti = int(input("Elige una Actividad: ")) - 1
+                repite = False
+            except:
+                repite = True
+
+        repite = True
+        while repite:
+            print("-Etapas disponibles-\n"
+                  "1.- Nueva\n"
+                  "2.- Calificada\n"
+                  "3.- Propuesta\n"
+                  "4.- Ganada")
+            try:
+                etap = int(input("Elige una Etapa: ")) - 1
+                repite = False
+            except:
+                repite = True
+
+        oportunidades[opor].getActividades()[acti].setEtapa(etap)
+        print("Etapa cambiada!")
+
+
+#######################################################################################
+
+# ///////////////////////////////////// CREA OPORTUNIDAD /////////////////////////////////
 def creaOportunidad():
     repite = True
     while repite:
@@ -69,8 +113,27 @@ def creaOportunidad():
         print("{0} Creada!\n".format(oportunidad.getNombre()))
 
 
-def creaCliente():
+####################################################################################
 
+# ///////////////// LISTADO DE LAS ACTIVIDADES DE UNA OPRTUNIDAD////////////////////
+def mostrarActividades():
+    opor = muestraOportunidad()
+
+    if len(oportunidades[opor].getActividades()) > 0:
+        for actividad in oportunidades[opor].getActividades():
+            print("\nNombre: ", actividad.getNombre())
+            print("Fecha: ", actividad.getFecha())
+            print("Descripción: ", actividad.getDescripcion())
+            print("Estado: ", actividad.getEtapa())
+
+    else:
+        print("En esta oportunidad no existe ninguna actividad")
+
+
+####################################################################################
+
+# ///////////////////////////////////// CREA CLIENTE/////////////////////////////////
+def creaCliente():
     nombre = ""
     empresa = ""
     repite = True
@@ -84,7 +147,6 @@ def creaCliente():
         else:
             repite = False
 
-
     cliente = Clase.Cliente(nombre, empresa)
 
     clientes.append(cliente)
@@ -92,28 +154,77 @@ def creaCliente():
     print("{0} Creado!\n".format(cliente.getNombre()))
 
 
-#//////////////////////////////////////////////////////////////////////////////////////
+#####################################################################################
 
-opciones = {"1": creaOportunidad, "2": creaCliente, "3": creaActividad, "4": cambiaEstado}
+# ///////////////////// ENLAZA UN CLIENTE CON UNA OPORTUNIDAD //////////////////////
+def apuntaCliente():
+    cli = ""
+    repite = True
+    while repite:
+        i = 1
+
+        for cli in clientes:
+            print(i, ": ", cli.getNombre())
+            i += 1
+
+        try:
+            c = int(input("Elige un Cliente: ")) - 1
+            repite = False
+        except:
+            repite = True
+
+    opor = muestraOportunidad()
+
+    cli.setOportunidad(oportunidades[opor])
+
+    print(cli.getNombre(), " apuntado a ", oportunidades[opor].getNombre())
+
+
+####################################################################################
+
+# ///////////////////// ELIMINA UNA OPORTUNIDAD SELECCIONADA ///////////////////////
+def eliminarOportunidad():
+    opor = muestraOportunidad()
+
+    for cli in clientes:
+        if (cli.getOportunidad() == oportunidades[opor].getNombre()):
+            cli.setOportunidad = ""
+
+    oportunidades[opor].getActividades().clear()
+    oportunidades.pop(opor)
+
+    print("Eliminada!")
+
+
+####################################################################################
+
+# /////////////////////////////////////// GRAFICOS /////////////////////////////////
+def grafico():
+    print("crea un grafico")
+
+
+####################################################################################
+
+# //////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////// MENU ///////////////////////////////////////////
+# /////////////////////////////////////////////////////////////////////////////////////
+opciones = {"1": creaOportunidad, "2": creaCliente, "3": creaActividad, "4": apuntaCliente, "5": cambiaEtapa,
+            "6": mostrarActividades, "7": eliminarOportunidad, "8": grafico}
 
 opcion = "0"
-while opcion != "5":
+while opcion != "9":
 
     print("1.- Crear Oportunidad\n"
           "2.- Crear Cliente\n"
           "3.- Crear Actividad\n"
-          "4.- Cambiar estado Actividad\n"
-          "5.- Salir")
+          "4.- Apuntar cliente a una Oportunidad\n"
+          "5.- Cambiar etapa Actividad\n"
+          "6.- Mostrar actividades de una oportunidad\n"
+          "7.- Elminar Oportindad\n"
+          "8.- Graficos\n"
+          "9.- Salir")
 
     opcion = input("opcion: ")[0]
 
-    if opcion != "5":
+    if opcion != "9":
         opciones.get(opcion)()
-
-
-
-
-
-
-
-#print("Nombre {0} empresa {1}".format(clientes[0].getNombre(), clientes[0].getEmpresa()))
