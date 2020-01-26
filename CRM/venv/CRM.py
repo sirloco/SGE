@@ -117,18 +117,21 @@ def creaOportunidad():
 
 # ///////////////// LISTADO DE LAS ACTIVIDADES DE UNA OPRTUNIDAD////////////////////
 def mostrarActividades():
-    opor = muestraOportunidad()
 
-    if len(oportunidades[opor].getActividades()) > 0:
-        for actividad in oportunidades[opor].getActividades():
-            print("\nNombre: ", actividad.getNombre())
-            print("Fecha: ", actividad.getFecha())
-            print("Descripción: ", actividad.getDescripcion())
-            print("Estado: ", actividad.getEtapa())
+    if len(oportunidades) > 0:
+        opor = muestraOportunidad()
 
+        if len(oportunidades[opor].getActividades()) > 0:
+            for actividad in oportunidades[opor].getActividades():
+                print("\nNombre: ", actividad.getNombre())
+                print("Fecha: ", actividad.getFecha())
+                print("Descripción: ", actividad.getDescripcion())
+                print("Estado: ", actividad.getEtapa())
+
+        else:
+            print("En esta oportunidad no existe ninguna actividad")
     else:
-        print("En esta oportunidad no existe ninguna actividad")
-
+        print("Debe existir al menos una oportunidad")
 
 ####################################################################################
 
@@ -158,42 +161,50 @@ def creaCliente():
 
 # ///////////////////// ENLAZA UN CLIENTE CON UNA OPORTUNIDAD //////////////////////
 def apuntaCliente():
-    cli = ""
-    repite = True
-    while repite:
-        i = 1
+    if len(oportunidades) < 1 or len(clientes) <1:
+        print("Debe esxistir al menos una oportunidad y un cliente")
+    else:
+        cli = ""
+        repite = True
+        while repite:
+            i = 1
 
-        for cli in clientes:
-            print(i, ": ", cli.getNombre())
-            i += 1
+            for cli in clientes:
+                print(i, ": ", cli.getNombre())
+                i += 1
 
-        try:
-            c = int(input("Elige un Cliente: ")) - 1
-            repite = False
-        except:
-            repite = True
+            try:
+                c = int(input("Elige un Cliente: ")) - 1
+                repite = False
+            except:
+                repite = True
 
-    opor = muestraOportunidad()
+        opor = muestraOportunidad()
 
-    cli.setOportunidad(oportunidades[opor])
+        cli.setOportunidad(oportunidades[opor])
 
-    print(cli.getNombre(), " apuntado a ", oportunidades[opor].getNombre())
+        print(cli.getNombre(), " apuntado a ", oportunidades[opor].getNombre())
 
 
 ####################################################################################
 
 # ///////////////////// ELIMINA UNA OPORTUNIDAD SELECCIONADA ///////////////////////
 def eliminarOportunidad():
-    opor = muestraOportunidad()
 
-    for cli in clientes:
-        if (cli.getOportunidad() == oportunidades[opor].getNombre()):
-            cli.setOportunidad = ""
+    if len(oportunidades) < 1:
+        print("Debe esxistir al menos una oportunidad")
+    else:
 
-    oportunidades[opor].getActividades().clear()
-    oportunidades.pop(opor)
+        opor = muestraOportunidad()
 
-    print("Eliminada!")
+        for cli in clientes:
+            if (cli.getOportunidad() == oportunidades[opor].getNombre()):
+                cli.setOportunidad = ""
+
+        oportunidades[opor].getActividades().clear()
+        oportunidades.pop(opor)
+
+        print("Eliminada!")
 
 
 ####################################################################################
